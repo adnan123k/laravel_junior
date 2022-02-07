@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Auth;
 
 class UserController extends Controller
@@ -23,6 +24,7 @@ class UserController extends Controller
         $data = $request->all();
         $data["points"] = 0;
         $data["role"] = "student";
+        
         $currentUser =    User::create($data);
         $token = $currentUser->createToken("myapp")->plainTextToken;
        $currentUser->remember_token=$token;
@@ -40,7 +42,10 @@ class UserController extends Controller
         ]);
 
         $data = $request->all();
-        $currentUser = User::where('username', '=', $data['username'], 'and', 'password', '=', $data['password'])->first();
+
+
+        $currentUser = User::where('username',  $data['username'])->where( 'password',  $data["password"]
+          )->first();
 
         if ($currentUser) {
          
