@@ -24,9 +24,11 @@ class LevelController extends Controller
                 # code...
                 $tmp = [];
                 $items = $item->Question()->get();
-         
+      
                 $c = count($items);
+        
                 while (count($tmp) != 10) {
+                  
                     $i = rand($items[0]["id"], $items[sizeof($items)-1]["id"]);
 
                     $q = Question::find($i);

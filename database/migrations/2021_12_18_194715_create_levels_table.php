@@ -17,8 +17,11 @@ class CreateLevelsTable extends Migration
             $table->id();
             $table->string('title');
             $table->unsignedBigInteger('subject_id');
-            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+            $table->unsignedBigInteger('lesson_id');
+            $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
 
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+           
             $table->timestamps();
         });
     }

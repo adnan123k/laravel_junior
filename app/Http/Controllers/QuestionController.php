@@ -17,7 +17,7 @@ class QuestionController extends Controller
         $data = $request->all();
 
 
-        $level = Level::where('subject_id', $data['subject_id'])->first();
+        $level = Level::where('subject_id', $data['subject_id'])->where('lesson_id',$id)->first();
         try {
             if ($level) {
                 foreach ($data["questions"] as $item) {
@@ -34,10 +34,10 @@ class QuestionController extends Controller
                     foreach ($subject->Lesson()->get() as $value) {
                         # code...
                         if ($value->id == $id) {
-                            $s = $subject->Level()->create(["title" => $temp . $index]);
+                            $s = $subject->Level()->create(["title" => $temp . $index,"lesson_id"=>$id]);
                             foreach ($data["questions"] as $item) {
                                 # code...
-
+$item["lesson_id"]=$id;
                                 $s->Question()->create($item);
                             }
                             return response()->json(["data" =>   "done"]);
